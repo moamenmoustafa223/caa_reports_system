@@ -11,6 +11,9 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('logo.svg') }}">
 
+    {{-- PWA Meta Tags --}}
+    @include('pwa.meta')
+
     {{-- Google font --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -190,6 +193,45 @@
             color: #a0a84d;
         }
 
+        /* PWA Install Button */
+        .pwa-install-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px 24px;
+            background: rgba(128, 135, 61, 0.9);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Almarai', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+            box-shadow: 0 4px 12px rgba(128, 135, 61, 0.3);
+        }
+
+        .pwa-install-btn:hover {
+            background: rgba(160, 168, 77, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(128, 135, 61, 0.4);
+        }
+
+        .pwa-install-btn:active {
+            transform: translateY(0);
+        }
+
+        .pwa-install-btn i {
+            font-size: 18px;
+        }
+
+        .pwa-install-btn.show {
+            display: flex;
+        }
+
         /* Responsive */
         @media (max-width: 480px) {
             .login-container {
@@ -236,6 +278,12 @@
                 <i class="fas fa-user-shield"></i>
                 {{ trans('auth.sign_in') }}
             </a>
+
+            <!-- PWA Install Button -->
+            <button id="pwaInstallBtn" class="pwa-install-btn">
+                <i class="fas fa-download"></i>
+                <span id="installText">{{ App::getLocale() == 'ar' ? 'تثبيت التطبيق' : 'Install App' }}</span>
+            </button>
         </div>
 
         <!-- Language Switcher -->
@@ -259,6 +307,62 @@
             <a href="https://mazoonsoft.com" target="_blank">{{ trans('auth.mazoonsoft') }}</a>
         </div>
     </div>
+
+    <!-- PWA Install Script -->
+    <script>
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwaInstallBtn');
+        const installText = document.getElementById('installText');
+        const isArabic = {{ App::getLocale() == 'ar' ? 'true' : 'false' }};
+
+        // Listen for the beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            // Show the install button
+            installBtn.classList.add('show');
+        });
+
+        // Handle install button click
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                return;
+            }
+
+            // Show the install prompt
+            deferredPrompt.prompt();
+
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+
+            if (outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+                // Update button text
+                installText.textContent = isArabic ? 'جاري التثبيت...' : 'Installing...';
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+
+            // Clear the deferredPrompt
+            deferredPrompt = null;
+        });
+
+        // Handle app installed event
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            // Hide the install button
+            installBtn.classList.remove('show');
+            deferredPrompt = null;
+        });
+
+        // Check if app is already installed
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+            // App is already installed, hide install button
+            installBtn.style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>

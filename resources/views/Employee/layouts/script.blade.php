@@ -68,6 +68,65 @@
 
 {{--جلب التخصصات الفرعية--}}
 
+<!-- PWA Floating Install Button -->
+<button id="pwaFloatBtn" class="pwa-float-btn" title="{{ App::getLocale() == 'ar' ? 'تثبيت التطبيق' : 'Install App' }}">
+    <i class="fas fa-download"></i>
+</button>
 
+<!-- PWA Install Script -->
+<script>
+    (function() {
+        let deferredPrompt;
+        const floatBtn = document.getElementById('pwaFloatBtn');
+
+        // Listen for the beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            // Show the floating install button
+            floatBtn.classList.add('show');
+        });
+
+        // Handle install button click
+        floatBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                return;
+            }
+
+            // Show the install prompt
+            deferredPrompt.prompt();
+
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+
+            if (outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+
+            // Clear the deferredPrompt
+            deferredPrompt = null;
+            // Hide the button after prompt
+            floatBtn.classList.remove('show');
+        });
+
+        // Handle app installed event
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            // Hide the install button
+            floatBtn.classList.remove('show');
+            deferredPrompt = null;
+        });
+
+        // Check if app is already installed
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+            // App is already installed, hide install button
+            floatBtn.style.display = 'none';
+        }
+    })();
+</script>
 
 @yield('js')

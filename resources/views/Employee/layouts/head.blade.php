@@ -40,6 +40,75 @@
         .logo-sm img {
             height: 40px !important;
         }
+
+        /* PWA Floating Install Button */
+        .pwa-float-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #80873d 0%, #a0a84d 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(128, 135, 61, 0.4);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .pwa-float-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 30px rgba(128, 135, 61, 0.6);
+        }
+
+        .pwa-float-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .pwa-float-btn.show {
+            display: flex;
+        }
+
+        .pwa-float-btn i {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* RTL Support */
+        [dir="rtl"] .pwa-float-btn {
+            right: auto;
+            left: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pwa-float-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 22px;
+            }
+
+            [dir="rtl"] .pwa-float-btn {
+                right: auto;
+                left: 20px;
+            }
+        }
     </style>
     @yield('css')
 </head>
