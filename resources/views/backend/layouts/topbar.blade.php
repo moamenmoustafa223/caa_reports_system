@@ -3,7 +3,7 @@
         <div class="d-flex align-items-center gap-2">
 
             <!-- Brand Logo -->
-            <a href="/" class="logo">
+            <a href="{{ route('dashboard.index') }}" class="logo">
                 <span class="logo-lg"><img src="{{ asset(App\Models\Setting::first()->logo) }}" alt="logo"></span>
                 <span class="logo-sm"><img src="{{ asset(App\Models\Setting::first()->logo) }}" alt="small logo"></span>
             </a>

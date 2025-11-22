@@ -2,6 +2,7 @@
 
 return [
     // Employee Report Create/Show Page Keys
+    'department_reports' => 'بلاغات القسم',
     'images' => 'الصور',
     'capture_image' => 'التقاط صورة',
     'upload_image' => 'رفع صورة',

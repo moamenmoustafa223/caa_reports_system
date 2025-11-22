@@ -2,6 +2,7 @@
 
 return [
     // Employee Report Create/Show Page Keys
+    'department_reports' => 'Department Reports',
     'images' => 'Images',
     'capture_image' => 'Capture Image',
     'upload_image' => 'Upload Image',

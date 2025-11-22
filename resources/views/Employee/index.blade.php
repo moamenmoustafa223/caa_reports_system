@@ -261,6 +261,11 @@
             <span class="action-icon">📋</span>
             <div class="action-title">{{ trans('back.my_reports') }}</div>
         </a>
+
+        <a href="{{ route('employee.department-reports.index') }}" class="action-card">
+            <span class="action-icon">🏢</span>
+            <div class="action-title">{{ trans('back.department_reports') }}</div>
+        </a>
     </div>
 
     <!-- Safety Awareness -->

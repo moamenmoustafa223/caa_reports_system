@@ -149,5 +149,9 @@ Route::group(
         Route::get('my-reports/create', [\App\Http\Controllers\Employee\ReportController::class, 'create'])->name('employee.reports.create');
         Route::post('my-reports', [\App\Http\Controllers\Employee\ReportController::class, 'store'])->name('employee.reports.store');
         Route::get('my-reports/{report}', [\App\Http\Controllers\Employee\ReportController::class, 'show'])->name('employee.reports.show');
+
+        // Department Reports
+        Route::get('department-reports', [\App\Http\Controllers\Employee\DepartmentReportController::class, 'index'])->name('employee.department-reports.index');
+        Route::get('department-reports/{report}', [\App\Http\Controllers\Employee\DepartmentReportController::class, 'show'])->name('employee.department-reports.show');
     }
 );
