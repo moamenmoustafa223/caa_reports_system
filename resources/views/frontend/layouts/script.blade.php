@@ -1,0 +1,16 @@
+<script src="{{asset('frontend/assets/js/jquery.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/magnific-popup.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/appear.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/odometer.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/parallax.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/smooth-scroll.js')}}"></script>
+<script src="{{asset('frontend/assets/js/rangeSlider.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/showMoreItems.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/mixitup.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/meanmenu.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/owl.carousel.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/form-validator.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/contact-form-script.js')}}"></script>
+<script src="{{asset('frontend/assets/js/ajaxchimp.min.js')}}"></script>
+<script src="{{asset('frontend/assets/js/main.js')}}"></script>
