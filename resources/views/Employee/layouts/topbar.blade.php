@@ -54,8 +54,44 @@
                 </div>
             </div>
 
+            <!-- Notification Dropdown -->
+            <div class="topbar-item me-3">
+                <div class="dropdown">
+                    @php
+                        $unreadCount = auth('employee')->user()->unreadNotifications->count();
+                    @endphp
+                    <a class="topbar-link drop-arrow-none d-flex" data-bs-toggle="dropdown" data-bs-offset="0,25"
+                        type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
+                        <i class="fa fa-bell animate-ring fs-22"></i>
+                        <span class="notification-count text-danger" style="font-size: 11px">
+                            {{ $unreadCount > 10 ? '10+' : ($unreadCount > 0 ? $unreadCount : 0) }}
+                        </span>
+                    </a>
 
+                    <div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg"
+                        style="min-height: 300px; overflow-y: scroll">
+                        <div class="p-2 border-bottom position-relative border-dashed">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="m-0 fs-16 fw-semibold">{{ trans('back.notifications') }}</h6>
+                                </div>
+                                <div class="col-auto">
+                                    (<span class="notification-count">{{ $unreadCount }}</span>)
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="position-relative rounded-0" style="max-height: 300px;" data-simplebar id="notifications-list">
+                            @include('Employee.partials.notifications', ['notifications' => auth('employee')->user()->unreadNotifications])
+                        </div>
+                        <div class="p-2 border-top text-center">
+                            <a href="javascript:void(0);" id="mark-all-read" class="btn btn-sm btn-success w-100">
+                                <i class="fas fa-check-double"></i> {{ trans('back.mark_all_as_read') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="topbar-item nav-user">
                 <div class="dropdown">

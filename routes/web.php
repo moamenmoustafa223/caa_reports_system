@@ -119,6 +119,7 @@ Route::group(
         // Reports
         Route::get('reports/export', [ReportController::class, 'export'])->name('reports.export');
         Route::post('reports/{report}/change-status', [ReportController::class, 'changeStatus'])->name('reports.change_status');
+        Route::post('reports/{report}/send-message', [ReportController::class, 'sendMessage'])->name('reports.send_message');
         Route::resource('reports', ReportController::class);
 
         // Report Attachments
@@ -140,6 +141,12 @@ Route::group(
         Route::get('my-info', [HomeEmployeeController::class, 'myInfo'])->name('employee.my_info');
         Route::resource('Messages', MessageController::class);
 
+        // Employee Notifications
+        Route::get('notifications/count', [HomeEmployeeController::class, 'getNotificationCount'])->name('employee.notifications.count');
+        Route::get('notifications/get', [HomeEmployeeController::class, 'getNotifications'])->name('employee.notifications.get');
+        Route::get('notifications/mark-as-read/{id}', [HomeEmployeeController::class, 'markAsRead'])->name('employee.notifications.mark_as_read');
+        Route::get('notifications/mark-all-as-read', [HomeEmployeeController::class, 'markAsReadAll'])->name('employee.notifications.mark_all_as_read');
+
         // Employee profile
         Route::get('profile', [\App\Http\Controllers\Employee\EmployeeProfileController::class, 'show'])->name('employee.profile.show');
         Route::post('profile', [\App\Http\Controllers\Employee\EmployeeProfileController::class, 'update'])->name('employee.profile.update');
@@ -149,6 +156,7 @@ Route::group(
         Route::get('my-reports/create', [\App\Http\Controllers\Employee\ReportController::class, 'create'])->name('employee.reports.create');
         Route::post('my-reports', [\App\Http\Controllers\Employee\ReportController::class, 'store'])->name('employee.reports.store');
         Route::get('my-reports/{report}', [\App\Http\Controllers\Employee\ReportController::class, 'show'])->name('employee.reports.show');
+        Route::post('my-reports/{report}/send-message', [\App\Http\Controllers\Employee\ReportController::class, 'sendMessage'])->name('employee.reports.send_message');
 
         // Department Reports
         Route::get('department-reports', [\App\Http\Controllers\Employee\DepartmentReportController::class, 'index'])->name('employee.department-reports.index');

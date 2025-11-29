@@ -2,6 +2,12 @@
 
 return [
     // Employee Report Create/Show Page Keys
+    'no_messages_yet'        => 'No messages yet',
+    'type_your_message'      => 'Type your message',
+    'send'                   => 'Send',
+    'message_sent_successfully' => 'Message sent successfully',
+    'new_message_on_report'  => 'New message on report',
+
     'department_reports' => 'Department Reports',
     'images' => 'Images',
     'capture_image' => 'Capture Image',
@@ -224,6 +230,7 @@ return [
     'no_reports_yet' => 'No reports yet',
     'quick_access' => 'Quick Access',
     'mark_as_read' => 'Mark as Read',
+    'mark_all_as_read' => 'Mark All as Read',
     'new_notification' => 'New Notification',
     // Reports
     'report' => 'Report',

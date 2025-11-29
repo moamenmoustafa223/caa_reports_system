@@ -214,6 +214,59 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Messages Card -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-comments"></i> {{ __('back.messages') }}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Messages List -->
+                        @if($report->messages && $report->messages->count() > 0)
+                            <div class="messages-container mb-2" id="admin-messages-container" style="max-height: 300px; overflow-y: auto; padding: 4px 0;">
+                                @foreach($report->messages as $message)
+                                    <div class="message-item mb-2 {{ $message->isSentByAdmin() ? 'admin-message' : 'employee-message' }}">
+                                        <div class="d-flex {{ $message->isSentByAdmin() ? 'justify-content-end' : '' }}">
+                                            <div class="message-bubble p-2 rounded" style="max-width: 70%; background-color: {{ $message->isSentByAdmin() ? '#e7f3ff' : '#f0f0f0' }}; word-wrap: break-word; word-break: break-word; overflow-wrap: break-word;">
+                                                <div class="message-header mb-1" style="font-size: 12px;">
+                                                    <strong>{{ $message->sender_name }}</strong>
+                                                    <small class="text-muted ms-1" style="font-size: 10px;">
+                                                        {{ $message->created_at->diffForHumans() }}
+                                                    </small>
+                                                </div>
+                                                <div class="message-text" style="word-wrap: break-word; word-break: break-word; white-space: pre-wrap; overflow-wrap: break-word; font-size: 13px; line-height: 1.4;">
+                                                    {{ $message->message }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-muted text-center">{{ __('back.no_messages_yet') }}</p>
+                        @endif
+
+                        <!-- Send Message Form -->
+                        <form action="{{ route('reports.send_message', $report->id) }}" method="POST" style="margin-top: 8px;">
+                            @csrf
+                            <div class="input-group input-group-sm">
+                                <textarea name="message"
+                                    class="form-control"
+                                    rows="2"
+                                    style="font-size: 13px;"
+                                    placeholder="{{ __('back.type_your_message') }}"
+                                    required></textarea>
+                                <button type="submit" class="btn btn-primary" style="font-size: 13px; padding: 8px 16px;">
+                                    <i class="fas fa-paper-plane"></i> {{ __('back.send') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -227,4 +280,16 @@
             margin-top: 5px;
         }
     </style>
+@endpush
+
+@push('scripts')
+<script>
+    // Scroll to bottom of messages container on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const messagesContainer = document.getElementById('admin-messages-container');
+        if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    });
+</script>
 @endpush

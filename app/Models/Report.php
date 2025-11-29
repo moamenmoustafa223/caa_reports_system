@@ -118,6 +118,14 @@ class Report extends Model
     }
 
     /**
+     * Get all messages for the report.
+     */
+    public function messages()
+    {
+        return $this->hasMany(ReportMessage::class)->orderBy('created_at', 'asc');
+    }
+
+    /**
      * Get localized short description based on current locale.
      */
     public function getShortDescriptionAttribute($value)

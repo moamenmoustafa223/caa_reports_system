@@ -2,6 +2,12 @@
 
 return [
     // Employee Report Create/Show Page Keys
+    'no_messages_yet'        => 'لا توجد رسائل بعد',
+    'type_your_message'      => 'اكتب رسالتك',
+    'send'                   => 'إرسال',
+    'message_sent_successfully' => 'تم إرسال الرسالة بنجاح',
+    'new_message_on_report'  => 'رسالة جديدة على البلاغ',
+
     'department_reports' => 'بلاغات القسم',
     'images' => 'الصور',
     'capture_image' => 'التقاط صورة',
@@ -98,6 +104,7 @@ return [
     'no_reports_yet' => 'لا توجد بلاغات بعد',
     'quick_access' => 'وصول سريع',
     'mark_as_read' => 'تعيين كمقروء',
+    'mark_all_as_read' => 'تعيين الكل كمقروء',
     'new_notification' => 'إشعار جديد',
     'leave_empty_to_keep_current' => 'اتركها فارغة لاستخدام القيمة الحالية',
     'system_setting' => 'إعدادات النظام',

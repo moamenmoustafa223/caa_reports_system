@@ -199,7 +199,9 @@ class ReportController extends Controller
             'attachments',
             'trackings.status',
             'trackings.changedByAdmin',
-            'trackings.changedByEmployee'
+            'trackings.changedByEmployee',
+            'messages.senderAdmin',
+            'messages.senderEmployee'
         ]);
 
         $reportStatuses = ReportStatus::all();
@@ -486,5 +488,29 @@ class ReportController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Send a message to the report.
+     */
+    public function sendMessage(Request $request, Report $report)
+    {
+        $request->validate([
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $message = $report->messages()->create([
+            'message' => $request->message,
+            'sender_admin_id' => auth()->id(),
+            'sender_employee_id' => null,
+        ]);
+
+        // Send notification to the employee who created the report
+        if ($report->employee) {
+            $senderName = auth()->user()->name;
+            $report->employee->notify(new \App\Notifications\NewMessageNotification($report, $message, $senderName));
+        }
+
+        return redirect()->back()->with('success', trans('back.message_sent_successfully'));
     }
 }

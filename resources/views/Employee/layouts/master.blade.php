@@ -3,6 +3,16 @@
 
 @include('Employee.layouts.head')
 
+<style>
+    body {
+        background-image: url('{{ asset('bg.png') }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+
 <body dir="{{ App::getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <!-- Begin page -->
 <div class="wrapper">

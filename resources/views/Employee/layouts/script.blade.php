@@ -129,4 +129,80 @@
     })();
 </script>
 
+<!-- Notification Auto-Refresh Script -->
+<script>
+    (function() {
+        // Auto-refresh notifications every 30 seconds
+        function refreshNotifications() {
+            fetch('{{ route("employee.notifications.get") }}')
+                .then(response => response.json())
+                .then(data => {
+                    // Update notification count in all places
+                    document.querySelectorAll('.notification-count').forEach(el => {
+                        el.textContent = data.count_display;
+                    });
+
+                    // Update notifications list
+                    const notificationsList = document.getElementById('notifications-list');
+                    if (notificationsList) {
+                        notificationsList.innerHTML = data.html;
+
+                        // Re-attach event listeners for new mark-as-read buttons
+                        attachMarkAsReadListeners();
+                    }
+                })
+                .catch(error => console.error('Error fetching notifications:', error));
+        }
+
+        // Mark single notification as read
+        function attachMarkAsReadListeners() {
+            document.querySelectorAll('.mark-as-read-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const notificationId = this.getAttribute('data-notification-id');
+                    const notificationItem = this.closest('.notification-item');
+
+                    fetch(`{{ route("employee.notifications.mark_as_read", ":id") }}`.replace(':id', notificationId))
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Remove the notification item with animation
+                                notificationItem.style.opacity = '0';
+                                setTimeout(() => {
+                                    refreshNotifications();
+                                }, 300);
+                            }
+                        })
+                        .catch(error => console.error('Error marking notification as read:', error));
+                });
+            });
+        }
+
+        // Mark all notifications as read
+        const markAllReadBtn = document.getElementById('mark-all-read');
+        if (markAllReadBtn) {
+            markAllReadBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                fetch('{{ route("employee.notifications.mark_all_as_read") }}')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            refreshNotifications();
+                        }
+                    })
+                    .catch(error => console.error('Error marking all as read:', error));
+            });
+        }
+
+        // Initial attachment of listeners
+        attachMarkAsReadListeners();
+
+        // Auto-refresh every 30 seconds (30000 milliseconds)
+        setInterval(refreshNotifications, 30000);
+    })();
+</script>
+
 @yield('js')

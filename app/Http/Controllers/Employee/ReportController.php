@@ -263,9 +263,44 @@ class ReportController extends Controller
             'attachments',
             'trackings.status',
             'trackings.changedByAdmin',
-            'trackings.changedByEmployee'
+            'trackings.changedByEmployee',
+            'messages.senderAdmin',
+            'messages.senderEmployee'
         ]);
 
         return view('Employee.reports.show', compact('report'));
+    }
+
+    /**
+     * Send a message to the report.
+     */
+    public function sendMessage(Request $request, Report $report)
+    {
+        $employee = auth('employee')->user();
+
+        // Ensure employee can only message their own reports
+        if ($report->employee_id !== $employee->id) {
+            abort(403);
+        }
+
+        $request->validate([
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $message = $report->messages()->create([
+            'message' => $request->message,
+            'sender_admin_id' => null,
+            'sender_employee_id' => $employee->id,
+        ]);
+
+        // Send notification to all admins
+        $senderName = app()->getLocale() == 'ar' ? $employee->name_ar : $employee->name_en;
+        $admins = \App\Models\User::all();
+        foreach ($admins as $admin) {
+            $admin->notify(new \App\Notifications\NewMessageNotification($report, $message, $senderName));
+        }
+
+        toast(trans('back.message_sent_successfully'), 'success');
+        return redirect()->back();
     }
 }

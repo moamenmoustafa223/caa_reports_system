@@ -319,6 +319,118 @@
         color: #0f172a;
     }
 
+    /* Messages Styles */
+    .messages-list {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 4px 0;
+    }
+
+    .message-bubble {
+        padding: 8px 10px;
+        border-radius: 10px;
+        margin-bottom: 6px;
+        max-width: 85%;
+    }
+
+    .message-bubble.my-message {
+        background: #e7f3ff;
+        margin-left: auto;
+        border-bottom-right-radius: 4px;
+    }
+
+    .message-bubble.admin-message {
+        background: #f0f0f0;
+        margin-right: auto;
+        border-bottom-left-radius: 4px;
+    }
+
+    .message-sender {
+        font-size: 11px;
+        font-weight: 600;
+        color: #262761;
+        margin-bottom: 3px;
+    }
+
+    .message-text {
+        font-size: 12px;
+        color: #334155;
+        line-height: 1.3;
+        margin-bottom: 2px;
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .message-time {
+        font-size: 10px;
+        color: #64748b;
+        text-align: right;
+    }
+
+    .empty-messages {
+        text-align: center;
+        padding: 20px;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .empty-messages i {
+        font-size: 28px;
+        margin-bottom: 8px;
+        display: block;
+        opacity: 0.5;
+    }
+
+    .message-form {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .message-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 13px;
+        font-family: 'Almarai', sans-serif;
+        resize: vertical;
+        transition: all 0.2s;
+    }
+
+    .message-input:focus {
+        outline: none;
+        border-color: #80873d;
+        box-shadow: 0 0 0 2px rgba(128, 135, 61, 0.1);
+    }
+
+    .send-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 10px 16px;
+        background: #262761;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .send-btn:hover {
+        background: #80873d;
+    }
+
+    .send-btn:active {
+        transform: scale(0.98);
+    }
+
     /* Responsive */
     @media (min-width: 769px) {
         .mobile-container {
@@ -497,6 +609,50 @@
         @endif
     </div>
 
+    <!-- Messages Section -->
+    <div class="section-card">
+        <div class="section-title">💬 {{ trans('back.messages') }}</div>
+
+        <!-- Messages List -->
+        @if($report->messages && $report->messages->count() > 0)
+            <div class="messages-list mb-2" id="messages-container">
+                @foreach($report->messages as $message)
+                    <div class="message-bubble {{ $message->isSentByEmployee() ? 'my-message' : 'admin-message' }}">
+                        <div class="message-sender">
+                            <strong>{{ $message->sender_name }}</strong>
+                        </div>
+                        <div class="message-text">
+                            {{ $message->message }}
+                        </div>
+                        <div class="message-time">
+                            {{ $message->created_at->diffForHumans() }}
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="empty-messages">
+                <i class="fas fa-comments"></i><br>
+                {{ trans('back.no_messages_yet') }}
+            </div>
+        @endif
+
+        <!-- Send Message Form -->
+        <form action="{{ route('employee.reports.send_message', $report->id) }}" method="POST">
+            @csrf
+            <div class="message-form">
+                <textarea name="message"
+                    class="message-input"
+                    rows="3"
+                    placeholder="{{ trans('back.type_your_message') }}"
+                    required></textarea>
+                <button type="submit" class="send-btn">
+                    <i class="fas fa-paper-plane"></i> {{ trans('back.send') }}
+                </button>
+            </div>
+        </form>
+    </div>
+
     <!-- Back Button -->
     <div class="action-footer mb-3">
         <a href="{{ route('employee.reports.index') }}" class="btn-back-full">
@@ -504,4 +660,16 @@
         </a>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    // Scroll to bottom of messages container on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const messagesContainer = document.getElementById('messages-container');
+        if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    });
+</script>
 @endsection
