@@ -467,8 +467,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            {{ trans('auth.programming_development') }}
-            <a href="https://mazoonsoft.com" target="_blank">{{ trans('auth.mazoonsoft') }}</a>
+           
         </div>
     </div>
 

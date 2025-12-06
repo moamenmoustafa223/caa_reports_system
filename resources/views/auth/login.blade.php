@@ -85,8 +85,7 @@
                             </form>
 
                             <div class="text-center mt-2">
-                                برمجة وتطوير
-                                <a href="https://mazoonsoft.com" target="_blank"> برنامج إدارة المدارس</a>
+                            
                             </div>
 
                         </div> <!-- end card-body -->

@@ -1,10 +1,18 @@
 <!-- PWA Meta Tags -->
+@php
+    $setting = \App\Models\Setting::first();
+    $locale = app()->getLocale();
+    $companyName = $locale === 'ar' 
+        ? ($setting->company_name_ar ?? "نظام الإخطارات")
+        : ($setting->company_name_en ?? "Ikhtaar Reporting System");
+    $shortName = substr($companyName, 0, 12);
+@endphp
 <meta name="theme-color" content="#262761">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="CAA">
-<meta name="application-name" content="CAA Reporting System">
+<meta name="apple-mobile-web-app-title" content="{{ $shortName }}">
+<meta name="application-name" content="{{ $companyName }}">
 <meta name="msapplication-TileColor" content="#262761">
 <meta name="msapplication-TileImage" content="/images/icons/icon-144x144.png">
 

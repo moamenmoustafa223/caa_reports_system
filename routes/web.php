@@ -32,9 +32,9 @@ Route::get('/offline', function () {
 })->name('offline');
 
 Route::get('/manifest.json', function () {
-    return response()->file(public_path('manifest.json'), [
-        'Content-Type' => 'application/manifest+json'
-    ]);
+    return response()
+        ->view('pwa.manifest')
+        ->header('Content-Type', 'application/manifest+json');
 });
 
 Route::get('/serviceworker.js', function () {

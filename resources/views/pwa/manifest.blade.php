@@ -1,7 +1,19 @@
+@php
+    $setting = \App\Models\Setting::first();
+    $locale = app()->getLocale();
+    
+    $companyName = $locale === 'ar' 
+        ? ($setting->company_name_ar ?? "نظام الإخطارات")
+        : ($setting->company_name_en ?? "Ikhtaar Reporting System");
+    
+    $description = $locale === 'ar'
+        ? "{$companyName} - نظام الإخطارات"
+        : "{$companyName} - Ikhtaar Reporting System";
+@endphp
 {
-    "name": "CAA Reporting System",
-    "short_name": "CAA",
-    "description": "Civil Aviation Authority Safety Reporting System",
+    "name": "{{ $companyName }}",
+    "short_name": "{{ substr($companyName, 0, 12) }}",
+    "description": "{{ $description }}",
     "start_url": "/",
     "id": "/",
     "display": "standalone",

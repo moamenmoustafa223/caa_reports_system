@@ -16,8 +16,8 @@ class SettingSeeder extends Seeder
     {
         DB::table('settings')->insert([
             'logo' => 'logo.png',
-            'company_name_ar' => 'حارس السلامة الذكي',
-            'company_name_en' => 'CAA - Civil Aviation Authority',
+            'company_name_ar' =>  'إخطار',
+            'company_name_en' => 'Ikhtaar',
             'email' => 'info@caa.gov.om',
             'phone' => '+968 24519400',
             'created_at' => now(),
