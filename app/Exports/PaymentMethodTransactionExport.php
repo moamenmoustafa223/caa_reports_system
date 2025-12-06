@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Exports;
 
 use App\Models\PaymentMethodTransaction;
@@ -25,7 +26,7 @@ class PaymentMethodTransactionExport implements FromView, WithEvents, ShouldAuto
     public function view(): View
     {
         $query = PaymentMethodTransaction::with('payment_method');
-    
+
         if ($this->startDate) {
             $query->whereDate('transaction_date', '>=', $this->startDate);
         }
@@ -41,17 +42,19 @@ class PaymentMethodTransactionExport implements FromView, WithEvents, ShouldAuto
         if ($this->paymentMethodId) {
             $query->where('payment_method_id', $this->paymentMethodId);
         }
-    
+
         $transactions = $query->get();
-    
+
         $totalCredit = $transactions->where('type', 'credit')->sum('amount');
         $totalDebit  = $transactions->where('type', 'debit')->sum('amount');
-    
+
         return view('backend.pages.paymentMethods.export_excel', compact(
-            'transactions', 'totalCredit', 'totalDebit'
+            'transactions',
+            'totalCredit',
+            'totalDebit'
         ));
     }
-    
+
 
     public function registerEvents(): array
     {
