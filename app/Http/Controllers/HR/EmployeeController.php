@@ -18,8 +18,7 @@ class EmployeeController extends Controller
         $search = $request->input('query');
         $employees = Employee::query()
             ->withCount('reports')
-            ->where('name_ar', 'LIKE', "%{$search}%")
-            ->orWhere('name_en', 'LIKE', "%{$search}%")
+            ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('phone', 'LIKE', "%{$search}%")
             ->orWhere('email', 'LIKE', "%{$search}%")
             ->orderBy('id', 'desc')->paginate(10);
@@ -39,43 +38,32 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'category_employees_id' => 'required',
-            'name_ar' => 'required',
-            'name_en' => 'required',
+            'name' => 'required',
             'employee_no' => ['required', 'unique:employees,employee_no'],
             'phone' => ['required', 'unique:employees,phone'],
             'email' => ['required', 'email', 'unique:employees,email'],
             'password' => 'required',
             'image' => 'nullable|image|mimes:jpg,jpeg,gif,png|max:20000',
-            'Join_date' => 'nullable|date',
         ]);
 
-        if ($image = $request->file('image')){
-            $filename = time().$image->getClientOriginalName();
+        if ($image = $request->file('image')) {
+            $filename = time() . $image->getClientOriginalName();
             $image->move('images/employees/', $filename);
-            $data['image'] = 'images/employees/'.$filename;
+            $data['image'] = 'images/employees/' . $filename;
         }
 
         $data['user_id'] = Auth::id();
         $data['category_employees_id'] = $request->category_employees_id;
-
-        $data['name_ar'] = $request->name_ar;
-        $data['name_en'] = $request->name_en;
-
+        $data['name'] = $request->name;
         $data['employee_no'] = $request->employee_no;
-        $data['Join_date'] = $request->Join_date;
-
-        $data['phone'] = normalizePhoneNumber($request->phone, Setting::first()->phone_code ?? '968');
-
+        $data['phone'] = $request->phone;
         $data['email'] = $request->email;
         $data['password'] = hash::make($request->password);
-
-        $data['Nationality'] = $request->Nationality;
-        $data['id_number'] = $request->id_number;
         $data['status'] = $request->status;
 
         Employee::create($data);
 
-        toast('تم الإضافة بنجاح','success');
+        toast('تم الإضافة بنجاح', 'success');
         return redirect()->route('Employees.index');
     }
 
@@ -100,45 +88,35 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'category_employees_id' => 'required',
-            'name_ar' => 'required',
-            'name_en' => 'required',
-            'employee_no' => ['required', 'unique:employees,employee_no,' .$id],
-            'phone' => ['required', 'unique:employees,phone,' .$id],
-            'email' => ['required', 'email', 'unique:employees,email,' .$id],
+            'name' => 'required',
+            'employee_no' => ['required', 'unique:employees,employee_no,' . $id],
+            'phone' => ['required', 'unique:employees,phone,' . $id],
+            'email' => ['required', 'email', 'unique:employees,email,' . $id],
             'image' => 'nullable|image|mimes:jpg,jpeg,gif,png|max:20000',
-            'Join_date' => 'nullable|date',
         ]);
 
         $employee = Employee::find($id);
 
-        if ($image = $request->file('image')){
-            $filename = time().$image->getClientOriginalName();
+        if ($image = $request->file('image')) {
+            $filename = time() . $image->getClientOriginalName();
             $image->move('images/employees/', $filename);
-            $data['image'] = 'images/employees/'.$filename;
+            $data['image'] = 'images/employees/' . $filename;
         }
 
         $data['user_id'] = Auth::id();
         $data['category_employees_id'] = $request->category_employees_id;
-
-        $data['name_ar'] = $request->name_ar;
-        $data['name_en'] = $request->name_en;
-
+        $data['name'] = $request->name;
         $data['employee_no'] = $request->employee_no;
-        $data['Join_date'] = $request->Join_date;
-
         $data['phone'] = $request->phone;
         $data['email'] = $request->email;
         if ($request->password) {
             $data['password'] = hash::make($request->password);
         }
-
-        $data['Nationality'] = $request->Nationality;
-        $data['id_number'] = $request->id_number;
         $data['status'] = $request->status;
 
         $employee->update($data);
 
-        toast('تم التعديل بنجاح','success');
+        toast('تم التعديل بنجاح', 'success');
         return redirect()->route('Employees.index');
     }
 
@@ -154,16 +132,13 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $employee = Employee::find($id);
-        if ($employee->reports()->count() > 0)
-        {
-            toast(__('back.cannot_delete_employee_has_reports'),'error');
+        if ($employee->reports()->count() > 0) {
+            toast(__('back.cannot_delete_employee_has_reports'), 'error');
             return redirect()->back();
         }
 
         $employee->delete();
-        toast('تم الحذف بنجاح','success');
+        toast('تم الحذف بنجاح', 'success');
         return redirect()->back();
     }
-
-
 }

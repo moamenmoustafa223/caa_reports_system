@@ -47,9 +47,6 @@
                             <th width="150">{{trans('employees.employee_name')}}</th>
                             <th width="100">{{trans('employees.Category')}}</th>
                             <th width="100">{{trans('employees.phone')}}</th>
-                            <th width="100">{{trans('employees.id_number')}}</th>
-                            <th width="100">{{trans('employees.Nationality')}}</th>
-                            <th width="100">{{trans('employees.Join_date')}}</th>
                             <th width="100">{{trans('back.Status')}}</th>
                             <th width="100">{{trans('back.reports')}}</th>
                             <th width="100">{{trans('employees.Created_at')}}</th>
@@ -78,11 +75,7 @@
                                     {{$employee->employee_no}}
                                 </td>
                                 <td>
-                                    @if (app()->getLocale() == 'ar')
-                                        {{ $employee->name_ar }}
-                                    @else
-                                        {{ $employee->name_en }}
-                                    @endif
+                                    {{ $employee->name }}
                                 </td>
 
                                 <td>
@@ -93,9 +86,6 @@
                                     @endif
                                 </td>
                                 <td> <a href="https://wa.me/{{ $employee->phone }}" target="_blank">{{ $employee->phone }}</a> </td>
-                                <td>{{ $employee->id_number }}</td>
-                                <td>{{ $employee->Nationality }}</td>
-                                <td> {{ $employee->Join_date }}</td>
                                 <td> {{ $employee->status() }}</td>
                                 <td>{{ $employee->reports_count ?? 0 }}</td>
                                 <td>{{ $employee->created_at }}</td>

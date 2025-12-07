@@ -49,7 +49,7 @@ class MessageController extends Controller
         $user = User::first();
         $messageData = [
             'title' => 'رسالة جديدة من:',
-            'body' => Auth::guard('employee')->user()->name_ar,
+            'body' => Auth::guard('employee')->user()->name,
         ];
         $user->notify(new MessageNotification($messageData));
 

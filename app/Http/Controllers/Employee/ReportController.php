@@ -25,15 +25,15 @@ class ReportController extends Controller
     {
         $employee = auth('employee')->user();
 
-        $query = Report::with([ 'location', 'severityLevel', 'status'])
+        $query = Report::with(['location', 'severityLevel', 'status'])
             ->where('employee_id', $employee->id);
 
         // Apply filters
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('report_number', 'like', "%{$search}%")
-                  ->orWhere('short_description', 'like', "%{$search}%");
+                    ->orWhere('short_description', 'like', "%{$search}%");
             });
         }
 
@@ -77,7 +77,7 @@ class ReportController extends Controller
         $locations = Location::where('status', 1)->get();
         $severityLevels = SeverityLevel::ordered()->get();
 
-        return view('Employee.reports.create', compact( 'locations', 'severityLevels'));
+        return view('Employee.reports.create', compact('locations', 'severityLevels'));
     }
 
     /**
@@ -236,7 +236,6 @@ class ReportController extends Controller
 
             toast(__('back.report_created_successfully'), 'success');
             return redirect()->route('employee.index');
-
         } catch (\Exception $e) {
             DB::rollBack();
             toast(__('back.error_occurred') . ': ' . $e->getMessage(), 'error');
@@ -294,7 +293,7 @@ class ReportController extends Controller
         ]);
 
         // Send notification to all admins
-        $senderName = app()->getLocale() == 'ar' ? $employee->name_ar : $employee->name_en;
+        $senderName = $employee->name;
         $admins = \App\Models\User::all();
         foreach ($admins as $admin) {
             $admin->notify(new \App\Notifications\NewMessageNotification($report, $message, $senderName));

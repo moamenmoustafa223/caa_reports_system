@@ -40,11 +40,7 @@
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->id }}"
                                     {{ request('employee_id') == $employee->id ? 'selected' : '' }}>
-                                    @if (app()->getLocale() == 'ar')
-                                        {{ $employee->name_ar }} / {{ $employee->phone }}
-                                    @else
-                                        {{ $employee->name_en }} / {{ $employee->phone }}
-                                    @endif
+                                    {{ $employee->name }} / {{ $employee->phone }}
                                 </option>
                             @endforeach
                         </select>
@@ -164,11 +160,9 @@
                                         <td><strong>{{ $report->report_number }}</strong></td>
                                         <td>{{ $report->report_date->format('Y-m-d') }}</td>
                                         <td>
-                                            @if (app()->getLocale() == 'ar')
-                                                {{ $report->employee?->name_ar ?? '-' }}
-                                            @else
-                                                {{ $report->employee?->name_en ?? '-' }}
-                                            @endif
+                                           
+                                                {{ $report->employee?->name ?? '-' }}
+
                                         </td>
                                         <td>
                                             @if (app()->getLocale() == 'ar')

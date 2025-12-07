@@ -100,7 +100,7 @@
                         <img src="{{ asset(auth()->user()->image ?? 'avatar.png') }}" width="32"
                             class="rounded-circle me-lg-2 d-flex" alt="user-image">
                         <span class="d-lg-flex flex-column gap-1 d-none">
-                            <h5 class="my-0">{{ auth()->user()->name_ar }}</h5>
+                            <h5 class="my-0">{{ auth()->user()->name }}</h5>
                         </span>
                         <i class="ri-arrow-down-s-line d-none d-lg-block align-middle ms-1"></i>
                     </a>

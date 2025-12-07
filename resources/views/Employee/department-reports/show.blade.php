@@ -374,11 +374,7 @@
         <div class="employee-info">
             <i class="fas fa-user"></i>
             <span>
-                @if (app()->getLocale() == 'ar')
-                    {{ $report->employee?->name_ar ?? '-' }}
-                @else
-                    {{ $report->employee?->name_en ?? '-' }}
-                @endif
+                    {{ $report->employee?->name ?? '-' }}
             </span>
         </div>
     </div>
@@ -508,11 +504,9 @@
                                     @if ($tracking->changed_by_admin_id)
                                         {{ $tracking->changedByAdmin->name ?? '-' }}
                                     @elseif ($tracking->changed_by_employee_id)
-                                        @if (app()->getLocale() == 'ar')
-                                            {{ $tracking->changedByEmployee->name_ar ?? '-' }}
-                                        @else
-                                            {{ $tracking->changedByEmployee->name_en ?? '-' }}
-                                        @endif
+                                        
+                                            {{ $tracking->changedByEmployee->name ?? '-' }}
+
                                     @endif
                                 </div>
                             @endif

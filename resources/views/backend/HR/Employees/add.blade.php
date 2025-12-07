@@ -67,21 +67,9 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                <label for="Join_date">{{trans('employees.Join_date')}}</label>
-                                
-                                <input type="date" class="form-control" placeholder="{{trans('employees.Join_date')}}" name="Join_date" value="{{old('Join_date')}}" >
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="name_ar">{{trans('employees.employee_name_ar')}}</label>
+                                <label for="name">{{trans('employees.employee_name')}}</label>
                                 <b class="text-danger">*</b>
-                                <input type="text" class="form-control" placeholder="{{trans('employees.employee_name_ar')}}" name="name_ar" value="{{old('name_ar')}}" required>
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="name_en">{{trans('employees.employee_name_en')}}</label>
-                                <b class="text-danger">*</b>
-                                <input type="text" class="form-control" placeholder="{{trans('employees.employee_name_en')}}" name="name_en" value="{{old('name_en')}}" required>
+                                <input type="text" class="form-control" placeholder="{{trans('employees.employee_name')}}" name="name" value="{{old('name')}}" required>
                             </div>
 
                             <div class="form-group col-md-3">
@@ -101,18 +89,6 @@
                                 <label for="password">{{trans('employees.password')}}</label>
                                 <b class="text-danger">*</b>
                                 <input type="password" class="form-control" placeholder="{{trans('employees.password')}}" name="password" value="{{old('password')}}" required>
-                            </div>
-
-                            <hr class="col-md-12">
-
-                            <div class="form-group col-md-3">
-                                <label for="Nationality">{{trans('employees.Nationality')}}</label>
-                                <input type="text" class="form-control" placeholder="{{trans('employees.Nationality')}}" name="Nationality" value="{{old('Nationality')}}" >
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="id_number">{{trans('employees.id_number')}}</label>
-                                <input type="text" class="form-control" placeholder="{{trans('employees.id_number')}} " name="id_number" value="{{old('id_number')}}" >
                             </div>
 
                             <div class="form-group col-md-3">

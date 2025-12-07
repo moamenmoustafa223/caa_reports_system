@@ -83,7 +83,7 @@ class Employee extends Authenticatable
      */
     public function getNameAttribute()
     {
-        return app()->getLocale() === 'ar' ? $this->name_ar : $this->name_en;
+        return $this->attributes['name'] ?? null;
     }
 
     public function status()

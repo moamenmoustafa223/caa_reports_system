@@ -17,7 +17,7 @@
                             {{trans('employees.Are you sure to delete?')}}
                             <br>
                             <br>
-                            {{$employee->name_ar}} /  {{$employee->name_en}}
+                            {{$employee->name}} 
                         </h4>
 
                     </div>

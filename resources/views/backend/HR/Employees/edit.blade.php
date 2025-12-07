@@ -66,18 +66,8 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                <label for="Join_date">{{trans('employees.Join_date')}}</label>
-                                <input type="date" class="form-control" placeholder="{{trans('employees.Join_date')}}" name="Join_date" value="{{$employee->Join_date}}" >
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="name_ar">{{trans('employees.employee_name_ar')}}</label>
-                                <input type="text" class="form-control" placeholder="{{trans('employees.employee_name_ar')}}" name="name_ar" value="{{$employee->name_ar}}" required>
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="name_en">{{trans('employees.employee_name_en')}}</label>
-                                <input type="text" class="form-control" placeholder="{{trans('employees.employee_name_en')}}" name="name_en" value="{{$employee->name_en}}" required>
+                                <label for="name">{{trans('employees.employee_name')}}</label>
+                                <input type="text" class="form-control" placeholder="{{trans('employees.employee_name')}}" name="name" value="{{$employee->name}}" required>
                             </div>
 
                             <div class="form-group col-md-3">
@@ -98,18 +88,6 @@
                                 <small class="form-text text-muted">{{trans('back.leave_empty_to_keep_current')}}</small>
                             </div>
 
-                            <hr class="col-md-12">
-
-                            <div class="form-group col-md-3">
-                                <label for="Nationality">{{trans('employees.Nationality')}}</label>
-                                <input type="text" class="form-control" placeholder="{{trans('employees.Nationality')}}" name="Nationality" value="{{$employee->Nationality}}" >
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="id_number">{{trans('employees.id_number')}} </label>
-                                <input type="text" class="form-control" placeholder="{{trans('employees.id_number')}}" name="id_number" value="{{$employee->id_number}}" >
-                            </div>
-
                             <div class="form-group col-md-3">
                                 <label for="image">{{trans('employees.image')}}</label>
                                 <input type="file" class="form-control" id="image" name="image">
@@ -117,7 +95,7 @@
 
                             <div class="form-group col-md-3">
                                 <label for="image">{{trans('employees.image')}}</label>
-                                <img src="{{asset($employee->image)}}" alt="{{$employee->name_ar}}" width="100">
+                                <img src="{{asset($employee->image)}}" alt="{{$employee->name}}" width="100">
                             </div>
 
                         </div>

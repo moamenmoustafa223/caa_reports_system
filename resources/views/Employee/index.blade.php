@@ -232,11 +232,9 @@
             </div>
             <div class="profile-details">
                 <h3>
-                    @if (app()->getLocale() == 'ar')
-                        {{ auth('employee')->user()->name_ar }}
-                    @else
-                        {{ auth('employee')->user()->name_en }}
-                    @endif
+
+                        {{ auth('employee')->user()->name }}
+                    
                 </h3>
                 <p>
                     @if (app()->getLocale() == 'ar')

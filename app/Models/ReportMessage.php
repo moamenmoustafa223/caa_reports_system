@@ -72,11 +72,7 @@ class ReportMessage extends Model
         if ($this->isSentByAdmin()) {
             return $this->senderAdmin->name ?? trans('back.admin');
         } elseif ($this->isSentByEmployee()) {
-            if (app()->getLocale() == 'ar') {
-                return $this->senderEmployee->name_ar ?? trans('back.employee');
-            } else {
-                return $this->senderEmployee->name_en ?? trans('back.employee');
-            }
+            return $this->senderEmployee->name ?? trans('back.employee');
         }
         return trans('back.unknown');
     }

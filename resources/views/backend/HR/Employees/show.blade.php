@@ -28,11 +28,7 @@
                     <div class="profile-info-detail overflow-hidden">
                         <h4 class="mb-2">
                             <span class="text-primary">{{ trans('back.employee_name') }} :</span>
-                            @if (app()->getLocale() == 'ar')
-                                {{ $employee->name_ar }}
-                            @else
-                                {{ $employee->name_en }}
-                            @endif
+                            {{ $employee->name }}
                         </h4>
                         <p class="font-16">
                             <span class="text-primary">{{ trans('back.employee_no') }} :</span>
@@ -40,22 +36,11 @@
                         </p>
 
                         <p class="font-16">
-                            <span class="text-primary">{{ trans('back.Join_date') }} :</span>
-                            {{ $employee->Join_date }}
-                        </p>
-
-                        <p class="font-16">
-                            <b>{{ trans('back.Nationality') }} :</b>
-                            {{ $employee->Nationality }}
-                            -
-                            <b> {{ trans('back.phone') }} :</b>
+                            <b>{{ trans('back.phone') }} :</b>
                             {{ $employee->phone }}
                             -
                             <b>{{ trans('back.email') }} :</b>
                             {{ $employee->email }}
-                            -
-                            <b> {{ trans('back.id_number') }} :</b>
-                            {{ $employee->id_number }}
                         </p>
 
                         <p class="font-16">

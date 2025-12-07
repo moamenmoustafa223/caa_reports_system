@@ -332,11 +332,8 @@
                         <div class="report-meta">
                             <span class="meta-tag employee-tag">
                                 <i class="fas fa-user"></i>
-                                @if (app()->getLocale() == 'ar')
-                                    {{ $report->employee?->name_ar ?? '-' }}
-                                @else
-                                    {{ $report->employee?->name_en ?? '-' }}
-                                @endif
+                                
+                                    {{ $report->employee?->name ?? '-' }}
                             </span>
                             <span class="meta-tag">
                                 <i class="fas fa-map-marker-alt"></i>
